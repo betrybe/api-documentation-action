@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
-  "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "name": "api-documentation-action",
+  "version": "0.0.1",
+  "description": "API Documentation Action",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
