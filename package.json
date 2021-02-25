@@ -8,7 +8,8 @@
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "all": "npm run lint && npm run prepare && npm run test"
+    "all": "npm run lint && npm run prepare && npm run test",
+    "aglio": "aglio"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,8 @@
   },
   "homepage": "https://github.com/actions/javascript-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.5"
+    "@actions/core": "^1.2.5",
+    "aglio": "^2.3.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.27.0",
