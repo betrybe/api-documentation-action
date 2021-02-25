@@ -1,6 +1,6 @@
 const commitApiDoc = async (options) => {
   const {
-    client,
+    octokit,
     owner,
     repo,
     ref,
@@ -17,7 +17,7 @@ const commitApiDoc = async (options) => {
     branch: ref,
   };
 
-  const params = await client.repos.getContent({
+  const params = await octokit.repos.getContent({
     owner,
     repo,
     ref,
@@ -28,7 +28,7 @@ const commitApiDoc = async (options) => {
   }))
   .catch(() => Promise.resolve(defaultParams));
 
-  await client.repos.createOrUpdateFileContents(params);
+  await octokit.repos.createOrUpdateFileContents(params);
 };
 
 module.exports = commitApiDoc;
