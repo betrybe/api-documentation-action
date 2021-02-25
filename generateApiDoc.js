@@ -24,7 +24,6 @@ const generateApiDoc = (filename) => {
 
   if (status === 0) {
     return {
-      path: output,
       name: buildProjectName(output, name, ext),
       content: Buffer.from(content, encoding).toString('base64'),
     };
