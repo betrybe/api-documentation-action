@@ -1,21 +1,44 @@
 const core = require('@actions/core');
-const wait = require('./wait');
+const github = require('@actions/github');
+
+const getApiFilenames = require('./getApiFilenames');
+const generateApiDoc = require('./generateApiDoc');
+const commitApiDoc = require('./commitApiDoc');
 
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+    const root = process.env.GITHUB_WORKSPACE || process.cwd();
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    const owner = core.getInput('owner', { required: true });
+    const repo = core.getInput('repo', { required: true });
+    const ref = core.getInput('ref', { required: true });
+    const token = core.getInput('token', { required: true });
 
-    core.setOutput('time', new Date().toTimeString());
+    core.startGroup('Print inputs');
+    core.debug(root, owner, repo, ref);
+    core.endGroup();
+
+    const octokit = new github.getOctokit(token);
+
+    const apiFilenames = getApiFilenames(root);
+    const docFilenames = apiFilenames.map(file => generateApiDoc(file));
+
+    for(const doc of docFilenames) {
+      await commitApiDoc({
+        octokit,
+        owner,
+        repo,
+        ref,
+        file: doc,
+      });
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 run();
+
+module.exports = run;
