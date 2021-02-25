@@ -13,8 +13,8 @@ describe('generateApiDoc', () => {
 
     const apibFilename = 'tests/repo/project1/docs/hello.apib';
     const expected = {
-      path: 'tests/repo/project1/docs/hello.html',
-      targetName: 'project1_hello.html',
+      name: 'project1_hello.html',
+      content: 'IyBHcm91cCBIZWxsbyBTZXJ2aWNlCgojIyBHRVQgL2hlbGxvCisgUmVzcG9uc2UgMjAwICh0ZXh0L3BsYWluKQoKICAgICAgICBIZWxsbyEK',
     };
 
     expect(generateApiDoc(apibFilename)).toMatchObject(expected);
