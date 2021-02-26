@@ -15,7 +15,7 @@ describe('getApiFilenames', () => {
   });
 
   it('When repo have node_modules folder its should be ignored', () => {
-    expect(getApiFilenames('tests/repo/node_modules')).toHaveLength(0);
+    expect(getApiFilenames('tests/repo/project1', ['project1'])).toHaveLength(0);
   });
 
 });
