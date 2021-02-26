@@ -9,7 +9,7 @@ const getApiFilenames = (dir, ignoredDirs = ['node_modules']) => {
   });
   return docs
     .filter(file => file !== null)
-    .reduce((files, file) => files.concat(file), []);
+    .flat();
 };
 
 const getApiFile = (filename, ignoredDirs) => {
