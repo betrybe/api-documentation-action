@@ -48,6 +48,7 @@ module.exports = commitApiDoc;
 
 const path = __nccwpck_require__(622);
 const fs = __nccwpck_require__(747);
+const core = __nccwpck_require__(186);
 const { spawnSync } = __nccwpck_require__(129);
 
 const generateApiDoc = (filename) => {
@@ -68,14 +69,15 @@ const generateApiDoc = (filename) => {
     output,
   ];
 
-  const { status } = spawnSync('npm', args);
+  const commandProcess = spawnSync('npm', args);
 
-  if (status === 0) {
+  if (commandProcess.status === 0) {
     return {
       name: buildProjectName(output, name, ext),
       content: Buffer.from(content, encoding).toString('base64'),
     };
   }
+  core.error(commandProcess);
   return null;
 };
 

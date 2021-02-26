@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const core = require('@actions/core');
 const { spawnSync } = require('child_process');
 
 const generateApiDoc = (filename) => {
@@ -20,14 +21,15 @@ const generateApiDoc = (filename) => {
     output,
   ];
 
-  const { status } = spawnSync('npm', args);
+  const commandProcess = spawnSync('npm', args);
 
-  if (status === 0) {
+  if (commandProcess.status === 0) {
     return {
       name: buildProjectName(output, name, ext),
       content: Buffer.from(content, encoding).toString('base64'),
     };
   }
+  core.error(commandProcess);
   return null;
 };
 
