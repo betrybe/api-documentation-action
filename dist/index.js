@@ -29,11 +29,11 @@ const commitApiDoc = async (options) => {
     repo,
     ref,
     path: name,
-  }).then(({ data }) => Promise.resolve({
+  }).then(({ data }) => ({
     ...defaultParams,
     sha: data.sha,
   }))
-  .catch(() => Promise.resolve(defaultParams));
+  .catch(() => defaultParams);
 
   await octokit.repos.createOrUpdateFileContents(params);
 };
@@ -102,9 +102,7 @@ const getApiFilenames = (dir, ignoredDirs = ['node_modules']) => {
     const fileOrDir = path.join(dir, subdir);
     return (fs.statSync(fileOrDir).isDirectory() ? getApiFilenames(fileOrDir, ignoredDirs) : getApiFile(fileOrDir, ignoredDirs));
   });
-  return docs
-    .filter(file => file !== null)
-    .reduce((files, file) => files.concat(file), []);
+  return docs.filter(file => file !== null).flat();
 };
 
 const getApiFile = (filename, ignoredDirs) => {

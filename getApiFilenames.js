@@ -7,9 +7,7 @@ const getApiFilenames = (dir, ignoredDirs = ['node_modules']) => {
     const fileOrDir = path.join(dir, subdir);
     return (fs.statSync(fileOrDir).isDirectory() ? getApiFilenames(fileOrDir, ignoredDirs) : getApiFile(fileOrDir, ignoredDirs));
   });
-  return docs
-    .filter(file => file !== null)
-    .flat();
+  return docs.filter(file => file !== null).flat();
 };
 
 const getApiFile = (filename, ignoredDirs) => {
