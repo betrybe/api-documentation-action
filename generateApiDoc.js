@@ -27,7 +27,6 @@ const generateApiDoc = (filename) => {
       content: Buffer.from(content, encoding).toString('base64'),
     };
   }
-  core.error(commandProcess);
   return null;
 };
 

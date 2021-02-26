@@ -13,6 +13,7 @@ const getApiFilenames = (dir) => {
     .reduce((files, file) => files.concat(file), []);
 };
 
-const getApiFile = (filename) => (path.extname(filename) === '.apib') ? filename : null;
+const getApiFile = (filename) =>
+  (path.extname(filename) === '.apib' && !path.dirname(filename).includes('node_modules')) ? filename : null;
 
 module.exports = getApiFilenames;
