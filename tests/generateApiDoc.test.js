@@ -1,5 +1,6 @@
 jest.mock('child_process');
 
+const fs = require('fs');
 const { spawnSync } = require('child_process');
 const generateApiDoc = require('../generateApiDoc');
 
@@ -11,10 +12,13 @@ describe('generateApiDoc', () => {
       output: [],
     });
 
+    const encoding = 'utf-8';
+    const file = fs.readFileSync('tests/repo/project1/docs/hello.html', encoding);
+
     const apibFilename = 'tests/repo/project1/docs/hello.apib';
     const expected = {
       name: 'project1_hello.html',
-      content: 'IyBHcm91cCBIZWxsbyBTZXJ2aWNlCgojIyBHRVQgL2hlbGxvCisgUmVzcG9uc2UgMjAwICh0ZXh0L3BsYWluKQoKICAgICAgICBIZWxsbyEK',
+      content: Buffer.from(file, encoding).toString('base64'),
     };
 
     expect(generateApiDoc(apibFilename)).toMatchObject(expected);

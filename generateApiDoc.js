@@ -5,7 +5,6 @@ const { spawnSync } = require('child_process');
 
 const generateApiDoc = (filename) => {
   const encoding = 'utf-8';
-  const content = fs.readFileSync(filename, encoding);
 
   const { dir, name } = path.parse(filename);
   const ext = 'html';
@@ -22,6 +21,7 @@ const generateApiDoc = (filename) => {
   const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {
+    const content = fs.readFileSync(output, encoding);
     return {
       name: buildProjectName(output, name, ext),
       content: Buffer.from(content, encoding).toString('base64'),
