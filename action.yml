@@ -1,13 +1,20 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'API Documentation Action'
+description: 'Generate API Documentation'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  owner:
+    description: 'owner of the target repository'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+    default: 'betrybe'
+  repo:
+    description: 'target repository name'
+    required: true
+  ref:
+    description: 'target branch'
+    required: true
+    default: 'main'
+  token:
+    description: 'token with credentials to commit in repository'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
