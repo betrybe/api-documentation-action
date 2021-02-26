@@ -17,7 +17,10 @@ async function run() {
     const token = core.getInput('token', { required: true });
 
     core.startGroup('Print inputs');
-    core.debug(root, owner, repo, ref);
+    core.debug(root);
+    core.debug(owner);
+    core.debug(repo);
+    core.debug(ref);
     core.endGroup();
 
     const octokit = new github.getOctokit(token);

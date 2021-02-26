@@ -19,9 +19,9 @@ describe('generateApiDoc', () => {
 
     expect(generateApiDoc(apibFilename)).toMatchObject(expected);
     expect(spawnSync).toHaveBeenCalledWith(
-      'npm',
+      'npx',
       [
-        'run', 'aglio', '--',
+        'aglio',
         '-i', 'tests/repo/project1/docs/hello.apib',
         '-o', 'tests/repo/project1/docs/hello.html'
       ]
@@ -40,9 +40,9 @@ describe('generateApiDoc', () => {
 
     expect(generateApiDoc(apibFilename)).toBe(expected);
     expect(spawnSync).toHaveBeenCalledWith(
-      'npm',
+      'npx',
       [
-        'run', 'aglio', '--',
+        'aglio',
         '-i', 'tests/repo/project1/docs/hello.apib',
         '-o', 'tests/repo/project1/docs/hello.html'
       ]

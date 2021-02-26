@@ -60,16 +60,14 @@ const generateApiDoc = (filename) => {
   const output = `${dir}/${name}.${ext}`;
 
   const args = [
-    'run',
     'aglio',
-    '--',
     '-i',
     filename,
     '-o',
     output,
   ];
 
-  const commandProcess = spawnSync('npm', args);
+  const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {
     return {
@@ -141,7 +139,10 @@ async function run() {
     const token = core.getInput('token', { required: true });
 
     core.startGroup('Print inputs');
-    core.debug(root, owner, repo, ref);
+    core.debug(root);
+    core.debug(owner);
+    core.debug(repo);
+    core.debug(ref);
     core.endGroup();
 
     const octokit = new github.getOctokit(token);

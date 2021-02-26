@@ -12,16 +12,14 @@ const generateApiDoc = (filename) => {
   const output = `${dir}/${name}.${ext}`;
 
   const args = [
-    'run',
     'aglio',
-    '--',
     '-i',
     filename,
     '-o',
     output,
   ];
 
-  const commandProcess = spawnSync('npm', args);
+  const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {
     return {
