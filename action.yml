@@ -1,5 +1,5 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'API Documentation Action'
+description: 'Generate API Documentation'
 inputs:
   owner:
     description: 'owner of the target repository'

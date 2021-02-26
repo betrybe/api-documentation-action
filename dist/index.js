@@ -48,7 +48,6 @@ module.exports = commitApiDoc;
 
 const path = __nccwpck_require__(622);
 const fs = __nccwpck_require__(747);
-const core = __nccwpck_require__(186);
 const { spawnSync } = __nccwpck_require__(129);
 
 const generateApiDoc = (filename) => {
@@ -97,7 +96,6 @@ module.exports = generateApiDoc;
 const fs = __nccwpck_require__(747);
 const path = __nccwpck_require__(622);
 
-
 const getApiFilenames = (dir, ignoredDirs = ['node_modules']) => {
   const subdirs = fs.readdirSync(dir);
   const docs = subdirs.map(subdir => {
@@ -129,7 +127,6 @@ const getApiFilenames = __nccwpck_require__(566);
 const generateApiDoc = __nccwpck_require__(266);
 const commitApiDoc = __nccwpck_require__(170);
 
-
 // most @actions toolkit packages have async methods
 async function run() {
   try {
@@ -141,10 +138,10 @@ async function run() {
     const token = core.getInput('token', { required: true });
 
     core.startGroup('Print inputs');
-    core.debug(root);
-    core.debug(owner);
-    core.debug(repo);
-    core.debug(ref);
+    core.info(root);
+    core.info(owner);
+    core.info(repo);
+    core.info(ref);
     core.endGroup();
 
     const octokit = new github.getOctokit(token);
@@ -152,13 +149,13 @@ async function run() {
     const apiFilenames = getApiFilenames(root);
 
     core.startGroup('api files');
-    core.debug(apiFilenames);
+    core.info(apiFilenames);
     core.endGroup();
 
     const docFilenames = apiFilenames.map(file => generateApiDoc(file));
 
     core.startGroup('doc files');
-    core.debug(docFilenames);
+    core.info(docFilenames);
     core.endGroup();
 
     for(const doc of docFilenames) {

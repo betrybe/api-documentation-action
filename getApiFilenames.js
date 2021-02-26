@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
 const getApiFilenames = (dir, ignoredDirs = ['node_modules']) => {
   const subdirs = fs.readdirSync(dir);
   const docs = subdirs.map(subdir => {

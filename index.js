@@ -5,7 +5,6 @@ const getApiFilenames = require('./getApiFilenames');
 const generateApiDoc = require('./generateApiDoc');
 const commitApiDoc = require('./commitApiDoc');
 
-
 // most @actions toolkit packages have async methods
 async function run() {
   try {
@@ -17,10 +16,10 @@ async function run() {
     const token = core.getInput('token', { required: true });
 
     core.startGroup('Print inputs');
-    core.debug(root);
-    core.debug(owner);
-    core.debug(repo);
-    core.debug(ref);
+    core.info(root);
+    core.info(owner);
+    core.info(repo);
+    core.info(ref);
     core.endGroup();
 
     const octokit = new github.getOctokit(token);
@@ -28,13 +27,13 @@ async function run() {
     const apiFilenames = getApiFilenames(root);
 
     core.startGroup('api files');
-    core.debug(apiFilenames);
+    core.info(apiFilenames);
     core.endGroup();
 
     const docFilenames = apiFilenames.map(file => generateApiDoc(file));
 
     core.startGroup('doc files');
-    core.debug(docFilenames);
+    core.info(docFilenames);
     core.endGroup();
 
     for(const doc of docFilenames) {
