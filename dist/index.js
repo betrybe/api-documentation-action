@@ -145,7 +145,16 @@ async function run() {
     const octokit = new github.getOctokit(token);
 
     const apiFilenames = getApiFilenames(root);
+
+    core.startGroup('api files');
+    core.debug(apiFilenames);
+    core.endGroup();
+
     const docFilenames = apiFilenames.map(file => generateApiDoc(file));
+
+    core.startGroup('doc files');
+    core.debug(docFilenames);
+    core.endGroup();
 
     for(const doc of docFilenames) {
       await commitApiDoc({
