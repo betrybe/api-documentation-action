@@ -4,6 +4,7 @@ const github = require('@actions/github');
 const getApiFilenames = require('./getApiFilenames');
 const generateApiDoc = require('./generateApiDoc');
 const commitApiDoc = require('./commitApiDoc');
+const dispatchGithubWorkflow = require('./dispatchGithubWorkflow');
 
 // most @actions toolkit packages have async methods
 async function run() {
@@ -14,6 +15,10 @@ async function run() {
     const repo = core.getInput('repo', { required: true });
     const ref = core.getInput('ref', { required: true });
     const token = core.getInput('token', { required: true });
+    const targetOwner = core.getInput('targetOwner', { required: true });
+    const targetRepo = core.getInput('targetRepo', { required: true });
+    const targetRef = core.getInput('targetRef', { required: true });
+    const targetWorkflowId = core.getInput('targetWorkflowId', { required: true });
 
     core.startGroup('Print inputs');
     core.info(root);
@@ -45,6 +50,15 @@ async function run() {
         file: doc,
       });
     }
+
+    await dispatchGithubWorkflow({
+      octokit,
+      owner: targetOwner,
+      repo: targetRepo,
+      workflow_id: targetWorkflowId,
+      ref: targetRef,
+    });
+
   } catch (error) {
     core.setFailed(error.message);
   }
