@@ -98,6 +98,10 @@ with:
   repo: 'my-repo'
   ref: 'my-branch'
   token: 'my-pat'
+  targetOwner: 'my-target-owner'
+  targetRepo: 'my-target-repo'
+  targetRef: 'my-target-ref'
+  targetWorkflowId: 'main.yml'
 ```
 
 See the [actions tab](https://github.com/actions/api-documentation-action/actions) for runs of this action! :rocket:
