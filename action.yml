@@ -26,7 +26,7 @@ inputs:
     description: 'target branch to dispatch'
     required: true
     default: 'main'
-  targetWorkflowid:
+  targetWorkflowId:
     description: 'workflow id or workflow filename'
     required: true
     default: 'main.yml'
