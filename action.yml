@@ -15,6 +15,22 @@ inputs:
   token:
     description: 'token with credentials to commit in repository'
     required: true
+  targetOwner:
+    description: 'owner of the target repository to dispatch'
+    required: true
+    default: 'betrybe'
+  targetRepo:
+    description: 'target repository name  to dispatch'
+    required: true
+  targetRef:
+    description: 'target branch to dispatch'
+    required: true
+    default: 'main'
+  targetWorkflowId:
+    description: 'workflow id or workflow filename'
+    required: true
+    default: 'main.yml'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
