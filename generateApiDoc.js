@@ -10,14 +10,13 @@ const generateApiDoc = (filename) => {
   const output = `${dir}/${name}.${ext}`;
 
   const args = [
-    'aglio',
     '-i',
     filename,
     '-o',
     output,
   ];
 
-  const commandProcess = spawnSync('npx', args);
+  const commandProcess = spawnSync('./node_modules/./.bin/aglio', args);
 
   if (commandProcess.status === 0) {
     const content = fs.readFileSync(output, encoding);
