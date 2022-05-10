@@ -166,27 +166,32 @@ async function run() {
     const targetWorkflowId = core.getInput('targetWorkflowId', { required: true });
 
     core.startGroup('Print inputs');
-    core.info(root);
-    core.info(owner);
-    core.info(repo);
-    core.info(ref);
+    core.info(`\u001b[48;5;6m[info] Root -> ${root}`);
+    core.info(`\u001b[48;5;6m[info] Owner -> ${owner}`);
+    core.info(`\u001b[48;5;6m[info] Repository -> ${repo}`);
+    core.info(`\u001b[48;5;6m[info] Ref(tag/branch) -> ${ref}`);
     core.endGroup();
 
     const octokit = new github.getOctokit(token);
 
     const apiFilenames = getApiFilenames(root);
 
-    core.startGroup('api files');
-    core.info(apiFilenames);
+    core.startGroup('Api files');
+    core.info(`\u001b[48;5;6m[info] Files -> ${apiFilenames}`);
     core.endGroup();
 
     const docFilenames = apiFilenames.map(file => generateApiDoc(file));
 
-    core.startGroup('doc files');
+    core.startGroup('Doc files');
     core.info(docFilenames);
     core.endGroup();
 
+    core.startGroup('Processing');
+
     for(const doc of docFilenames) {
+
+    core.info(`\u001b[48;5;6m[info] Committing file ${doc.name}`);
+
       await commitApiDoc({
         octokit,
         owner,
@@ -196,6 +201,8 @@ async function run() {
       });
     }
 
+    core.endGroup();
+    core.info(`\u001b[48;5;6m[info] Dispatching Workflow`);
     await dispatchGithubWorkflow({
       octokit,
       owner: targetOwner,
