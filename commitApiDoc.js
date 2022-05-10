@@ -29,7 +29,11 @@ const commitApiDoc = async (options) => {
     ...defaultParams,
     sha: data.sha,
   }))
-  .catch(() => defaultParams);
+  .catch((error) => {
+    core.info(error)
+    return defaultParams
+  });
+  
   core.info(params)
   await octokit.repos.createOrUpdateFileContents(params);
 };
