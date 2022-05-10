@@ -45,7 +45,7 @@ async function run() {
 
     for(const doc of docFilenames) {
 
-    core.info(`\u001b[48;5;6m[info] Committing file ${doc.name}`);
+      core.info(`\u001b[48;5;6m[info] Committing file ${doc.name}`);
 
       await commitApiDoc({
         octokit,
@@ -67,7 +67,7 @@ async function run() {
     });
 
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error);
   }
 }
 
