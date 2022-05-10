@@ -1,3 +1,6 @@
+const core = require('@actions/core');
+
+
 const commitApiDoc = async (options) => {
   const {
     octokit,
@@ -27,7 +30,7 @@ const commitApiDoc = async (options) => {
     sha: data.sha,
   }))
   .catch(() => defaultParams);
-
+  core.info(params)
   await octokit.repos.createOrUpdateFileContents(params);
 };
 
