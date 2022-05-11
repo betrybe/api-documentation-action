@@ -28,7 +28,7 @@ async function run() {
     core.endGroup();
 
     const octokit = new github.getOctokit(token);
-    core.info(token);
+    core.info(octokit.repos);
 
     const apiFilenames = getApiFilenames(root);
 
