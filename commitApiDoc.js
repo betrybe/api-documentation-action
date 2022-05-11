@@ -20,7 +20,7 @@ const commitApiDoc = async (options) => {
     branch: ref,
   };
 
-  const params = await octokit.repos.getContent({
+  const params = await octokit.rest.repos.getContent({
     owner,
     repo,
     ref,
