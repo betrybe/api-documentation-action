@@ -184,7 +184,9 @@ async function run() {
     core.info(`📄 Files -> ${apiFilenames}`);
     core.endGroup();
 
-    const docFilenames = apiFilenames.map(file => generateApiDoc(file, themeStyle, themeTemplate));
+    const docFilenames = apiFilenames
+      .map(file => generateApiDoc(file, themeStyle, themeTemplate))
+      .filter(file => file != null)
 
     core.startGroup('Processing');
 
