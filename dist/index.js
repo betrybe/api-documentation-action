@@ -189,9 +189,6 @@ async function run() {
     core.startGroup('Processing');
 
     for(const doc of docFilenames) {
-
-      core.info(`Committing file ${doc.name}`);
-
       await commitApiDoc({
         octokit,
         owner,
