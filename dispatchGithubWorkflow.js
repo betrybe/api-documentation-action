@@ -7,7 +7,7 @@ const dispatchGithubWorkflow = async (options) => {
     ref,
   } = options;
 
-  await octokit.actions.createWorkflowDispatch({
+  await octokit.rest.actions.createWorkflowDispatch({
     owner,
     repo,
     workflow_id,

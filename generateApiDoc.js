@@ -2,17 +2,16 @@ const path = require('path');
 const fs = require('fs');
 const { spawnSync } = require('child_process');
 
-const generateApiDoc = (filename) => {
-  const encoding = 'utf-8';
-
+const generateApiDoc = (filename, themeStyle = 'default', themeTemplate = 'default') => {
   const { dir, name } = path.parse(filename);
+  const encoding = 'utf-8';
   const ext = 'html';
   const output = `${dir}/${name}.${ext}`;
-
   const args = [
     'aglio',
-    '-i',
-    filename,
+    '-i', filename,
+    '--theme-style', themeStyle,
+    '--theme-template', themeTemplate,
     '-o',
     output,
   ];

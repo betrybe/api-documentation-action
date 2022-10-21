@@ -20,7 +20,7 @@ const commitApiDoc = async (options) => {
     branch: ref,
   };
 
-  const params = await octokit.repos.getContent({
+  const params = await octokit.rest.repos.getContent({
     owner,
     repo,
     ref,
@@ -30,12 +30,11 @@ const commitApiDoc = async (options) => {
     sha: data.sha,
   }))
   .catch((error) => {
-    core.info(error)
+    core.error(error)
     return defaultParams
   });
   
-  core.info(params)
-  await octokit.repos.createOrUpdateFileContents(params);
+  await octokit.rest.repos.createOrUpdateFileContents(params);
 };
 
 module.exports = commitApiDoc;
