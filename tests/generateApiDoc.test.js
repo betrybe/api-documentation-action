@@ -27,7 +27,7 @@ describe('generateApiDoc', () => {
       [
         'aglio',
         '-i', 'tests/repo/project1/docs/hello.apib',
-        "--theme-style",
+        "--theme-variables",
         "default",
         "--theme-template",
         "default",
@@ -52,7 +52,7 @@ describe('generateApiDoc', () => {
       [
         'aglio',
         '-i', 'tests/repo/project1/docs/hello.apib',
-        "--theme-style",
+        "--theme-variables",
         "default",
         "--theme-template",
         "default",

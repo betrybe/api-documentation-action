@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { spawnSync } = require('child_process');
 
-const generateApiDoc = (filename, themeStyle = 'default', themeTemplate = 'default') => {
+const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'default') => {
   const { dir, name } = path.parse(filename);
   const encoding = 'utf-8';
   const ext = 'html';
@@ -10,7 +10,7 @@ const generateApiDoc = (filename, themeStyle = 'default', themeTemplate = 'defau
   const args = [
     'aglio',
     '-i', filename,
-    '--theme-style', themeStyle,
+    '--theme-variables', themeVariables,
     '--theme-template', themeTemplate,
     '-o',
     output,

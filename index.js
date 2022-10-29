@@ -18,28 +18,30 @@ async function run() {
     const targetRepo = core.getInput('targetRepo', { required: true });
     const targetRef = core.getInput('targetRef', { required: true });
     const targetWorkflowId = core.getInput('targetWorkflowId', { required: true });
-    const themeStyle = core.getInput('themeStyle', { required: false });
+    const themeVariables = core.getInput('themeVariables', { required: false });
     const themeTemplate = core.getInput('themeTemplate', { required: false });
 
-    core.startGroup('Print inputs');
-    core.info(`🪴 Root -> ${root}`);
-    core.info(`👑 Owner -> ${owner}`);
-    core.info(`📂 Repository -> ${repo}`);
-    core.info(`🏷️ Ref(tag/branch) -> ${ref}`);
+    core.startGroup('🕹 INPUTS ↴');
+    core.info(`🪴 Root → ${root}`);
+    core.info(`👑 Owner → ${owner}`);
+    core.info(`📂 Repository → ${repo}`);
+    core.info(`🏷️ Ref(tag/branch) → ${ref}`);
     core.endGroup();
+    
 
     const octokit = github.getOctokit(token);
     const apiFilenames = getApiFilenames(root);
 
-    core.startGroup('Api files');
-    core.info(`📄 Files -> ${apiFilenames}`);
+    core.startGroup('🗂 API FILES ↴');
+    core.info(`📄 Files → ${apiFilenames}`);
     core.endGroup();
 
+    core.startGroup('🔄 Processing ↴');
+
     const docFilenames = apiFilenames
-      .map(file => generateApiDoc(file, themeStyle, themeTemplate))
+      .map(file => generateApiDoc(file, themeVariables, themeTemplate))
       .filter(file => file != null)
 
-    core.startGroup('Processing');
 
     for(const doc of docFilenames) {
       await commitApiDoc({
@@ -51,7 +53,7 @@ async function run() {
       });
     }
 
-    core.info(`Dispatching Workflow`);
+    core.info(`📩 Dispatching Workflow`);
     core.endGroup();
     await dispatchGithubWorkflow({
       octokit,

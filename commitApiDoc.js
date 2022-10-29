@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 
-
 const commitApiDoc = async (options) => {
   const {
     octokit,

@@ -30,11 +30,11 @@ inputs:
     description: 'workflow id or workflow filename'
     required: true
     default: 'main.yml'
-  theme:
+  themeVariables:
     description: 'theme used to generate the documentation'
     required: false
     default: 'default'
-  themeColumnsNumber:
+  themeTemplate:
     description: 'Number of columns used in the theme' 
     required: false
     default: 'default'
