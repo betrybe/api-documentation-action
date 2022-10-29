@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const core = require('@actions/core');
 const { spawnSync } = require('child_process');
 
 const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'default') => {
@@ -16,6 +17,9 @@ const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'd
     output,
   ];
 
+  const fullCommand = args.join(' ')
+
+  core.info(`🪖 Command → ${fullCommand}`)
   const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {

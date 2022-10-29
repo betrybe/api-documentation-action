@@ -77,6 +77,7 @@ module.exports = dispatchGithubWorkflow;
 
 const path = __nccwpck_require__(1017);
 const fs = __nccwpck_require__(7147);
+const core = __nccwpck_require__(2186);
 const { spawnSync } = __nccwpck_require__(2081);
 
 const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'default') => {
@@ -93,6 +94,9 @@ const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'd
     output,
   ];
 
+  const fullCommand = args.join(' ')
+
+  core.info(`🪖 Command → ${fullCommand}`)
   const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {
