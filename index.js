@@ -22,10 +22,10 @@ async function run() {
     const themeTemplate = core.getInput('themeTemplate', { required: false });
 
     core.startGroup('🕹 INPUTS ↴');
-    core.info(`🪴 Root → ${root}`);
-    core.info(`👑 Owner → ${owner}`);
-    core.info(`📂 Repository → ${repo}`);
-    core.info(`🏷️ Ref(tag/branch) → ${ref}`);
+    core.info(`Root → ${root}`);
+    core.info(`Owner → ${owner}`);
+    core.info(`Repository → ${repo}`);
+    core.info(`Ref(tag/branch) → ${ref}`);
     core.endGroup();
     
 
@@ -33,10 +33,10 @@ async function run() {
     const apiFilenames = getApiFilenames(root);
 
     core.startGroup('🗂 API FILES ↴');
-    core.info(`📄 Files → ${apiFilenames}`);
+    core.info(`Files → ${apiFilenames}`);
     core.endGroup();
 
-    core.startGroup('🔄 Processing ↴');
+    core.info('🔄 Processing ↴');
 
     const docFilenames = apiFilenames
       .map(file => generateApiDoc(file, themeVariables, themeTemplate))
@@ -54,7 +54,6 @@ async function run() {
     }
 
     core.info(`📩 Dispatching Workflow`);
-    core.endGroup();
     await dispatchGithubWorkflow({
       octokit,
       owner: targetOwner,
