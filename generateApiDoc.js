@@ -1,22 +1,25 @@
 const path = require('path');
 const fs = require('fs');
+const core = require('@actions/core');
 const { spawnSync } = require('child_process');
 
-const generateApiDoc = (filename) => {
-  const encoding = 'utf-8';
-
+const generateApiDoc = (filename, themeVariables = 'default', themeTemplate = 'default') => {
   const { dir, name } = path.parse(filename);
+  const encoding = 'utf-8';
   const ext = 'html';
   const output = `${dir}/${name}.${ext}`;
-
   const args = [
     'aglio',
-    '-i',
-    filename,
+    '-i', filename,
+    '--theme-variables', themeVariables,
+    '--theme-template', themeTemplate,
     '-o',
     output,
   ];
 
+  const fullCommand = args.join(' ')
+
+  core.info(`🪖 Command → ${fullCommand}`)
   const commandProcess = spawnSync('npx', args);
 
   if (commandProcess.status === 0) {

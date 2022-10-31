@@ -30,7 +30,15 @@ inputs:
     description: 'workflow id or workflow filename'
     required: true
     default: 'main.yml'
+  themeVariables:
+    description: 'theme used to generate the documentation'
+    required: false
+    default: 'default'
+  themeTemplate:
+    description: 'Number of columns used in the theme' 
+    required: false
+    default: 'default'
 
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

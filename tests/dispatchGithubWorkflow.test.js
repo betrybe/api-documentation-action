@@ -1,8 +1,10 @@
 const dispatchGithubWorkflow = require('../dispatchGithubWorkflow');
 
 const octokit = {
-  actions: {
-    createWorkflowDispatch: jest.fn(),
+  rest:{
+    actions: {
+      createWorkflowDispatch: jest.fn(),
+    }
   }
 };
 
@@ -22,11 +24,11 @@ describe('dispatchGithubWorkflow', () => {
   });
 
   it('should dispatch workflow', async () => {
-    octokit.actions.createWorkflowDispatch.mockResolvedValue({});
+    octokit.rest.actions.createWorkflowDispatch.mockResolvedValue({});
 
     await run();
 
-    expect(octokit.actions.createWorkflowDispatch).toHaveBeenCalledWith({
+    expect(octokit.rest.actions.createWorkflowDispatch).toHaveBeenCalledWith({
       owner: 'my-org',
       repo: 'my-repo',
       workflow_id: 'main.yml',

@@ -1,9 +1,11 @@
 const commitApiDoc = require('../commitApiDoc');
 
 const octokit = {
-  repos: {
-    getContent: jest.fn(),
-    createOrUpdateFileContents: jest.fn(),
+  rest:{
+    repos: {
+      getContent: jest.fn(),
+      createOrUpdateFileContents: jest.fn(),
+    }
   }
 };
 
@@ -26,9 +28,9 @@ describe('commitApiDoc', () => {
   });
 
   it('when file do not exists in repository its should be created', async () => {
-    octokit.repos.getContent
+    octokit.rest.repos.getContent
       .mockImplementation(() => Promise.reject(Error('Not Found')));
-    octokit.repos.createOrUpdateFileContents
+      octokit.rest.repos.createOrUpdateFileContents
       .mockResolvedValue({
         data: {
           content: {
@@ -41,13 +43,13 @@ describe('commitApiDoc', () => {
 
     await run();
 
-    expect(octokit.repos.getContent).toHaveBeenCalledWith({
+    expect(octokit.rest.repos.getContent).toHaveBeenCalledWith({
       owner: 'my-org',
       repo: 'my-repo',
       ref: 'my-branch',
       path: 'project1_hello.html',
     });
-    expect(octokit.repos.createOrUpdateFileContents).toHaveBeenCalledWith({
+    expect(octokit.rest.repos.createOrUpdateFileContents).toHaveBeenCalledWith({
       owner: 'my-org',
       repo: 'my-repo',
       path: 'project1_hello.html',
@@ -58,7 +60,7 @@ describe('commitApiDoc', () => {
   });
 
   it('when file exists in repository the file should be updated', async () => {
-    octokit.repos.getContent
+    octokit.rest.repos.getContent
       .mockResolvedValue({
         data: {
           name: 'project1_hello.html',
@@ -66,7 +68,7 @@ describe('commitApiDoc', () => {
           sha: '3d21ec53a331a6f037a91c368710b99387d012c1',
         }
       });
-    octokit.repos.createOrUpdateFileContents
+      octokit.rest.repos.createOrUpdateFileContents
       .mockResolvedValue({
         data: {
           content: {
@@ -79,13 +81,13 @@ describe('commitApiDoc', () => {
 
     await run();
 
-    expect(octokit.repos.getContent).toHaveBeenCalledWith({
+    expect(octokit.rest.repos.getContent).toHaveBeenCalledWith({
       owner: 'my-org',
       repo: 'my-repo',
       ref: 'my-branch',
       path: 'project1_hello.html',
     });
-    expect(octokit.repos.createOrUpdateFileContents).toHaveBeenCalledWith({
+    expect(octokit.rest.repos.createOrUpdateFileContents).toHaveBeenCalledWith({
       owner: 'my-org',
       repo: 'my-repo',
       path: 'project1_hello.html',

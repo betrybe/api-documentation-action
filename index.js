@@ -6,7 +6,6 @@ const generateApiDoc = require('./generateApiDoc');
 const commitApiDoc = require('./commitApiDoc');
 const dispatchGithubWorkflow = require('./dispatchGithubWorkflow');
 
-// most @actions toolkit packages have async methods
 async function run() {
   try {
     const root = process.env.GITHUB_WORKSPACE || process.cwd();
@@ -19,27 +18,30 @@ async function run() {
     const targetRepo = core.getInput('targetRepo', { required: true });
     const targetRef = core.getInput('targetRef', { required: true });
     const targetWorkflowId = core.getInput('targetWorkflowId', { required: true });
+    const themeVariables = core.getInput('themeVariables', { required: false });
+    const themeTemplate = core.getInput('themeTemplate', { required: false });
 
-    core.startGroup('Print inputs');
-    core.info(root);
-    core.info(owner);
-    core.info(repo);
-    core.info(ref);
+    core.startGroup('🕹 INPUTS ↴');
+    core.info(`Root → ${root}`);
+    core.info(`Owner → ${owner}`);
+    core.info(`Repository → ${repo}`);
+    core.info(`Ref(tag/branch) → ${ref}`);
     core.endGroup();
+    
 
-    const octokit = new github.getOctokit(token);
-
+    const octokit = github.getOctokit(token);
     const apiFilenames = getApiFilenames(root);
 
-    core.startGroup('api files');
-    core.info(apiFilenames);
+    core.startGroup('🗂 API FILES ↴');
+    core.info(`Files → ${apiFilenames}`);
     core.endGroup();
 
-    const docFilenames = apiFilenames.map(file => generateApiDoc(file));
+    core.info('🔄 Processing ↴');
 
-    core.startGroup('doc files');
-    core.info(docFilenames);
-    core.endGroup();
+    const docFilenames = apiFilenames
+      .map(file => generateApiDoc(file, themeVariables, themeTemplate))
+      .filter(file => file != null)
+
 
     for(const doc of docFilenames) {
       await commitApiDoc({
@@ -51,6 +53,7 @@ async function run() {
       });
     }
 
+    core.info(`📩 Dispatching Workflow`);
     await dispatchGithubWorkflow({
       octokit,
       owner: targetOwner,
@@ -60,7 +63,7 @@ async function run() {
     });
 
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error);
   }
 }
 
